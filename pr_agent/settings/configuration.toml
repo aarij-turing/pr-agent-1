@@ -44,8 +44,8 @@ output_relevant_configurations=false
 large_patch_policy = "clip" # "clip", "skip"
 duplicate_prompt_examples = false
 # seed
-seed=-1 # set positive value to fix the seed (and ensure temperature=0)
-temperature=0.2
+seed=1 # set positive value to fix the seed (and ensure temperature=0)
+temperature=0
 # ignore logic
 ignore_pr_title = ["^\\[Auto\\]", "^Auto"] # a list of regular expressions to match against the PR title to ignore the PR agent
 ignore_pr_target_branches = [] # a list of regular expressions of target branches to ignore from PR agent when an PR is created
@@ -346,3 +346,10 @@ pr_commands = [
     "/review",
     "/improve",
 ]
+
+[pr_deployment_impact]
+persistent_comment = true
+final_update_message = "This is the final deployment impact analysis."
+extra_instructions = """
+Also consider containerization and cloud deployments if applicable.
+"""

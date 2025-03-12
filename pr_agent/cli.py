@@ -41,6 +41,8 @@ def set_parser():
 
     - generate_labels
 
+    - deployment_impact - Analyze how code changes might affect production systems, including dependencies, resources, and deployment strategies.
+
 
     Configuration:
     To edit any configuration parameter from 'configuration.toml', just add -config_path=<value>.

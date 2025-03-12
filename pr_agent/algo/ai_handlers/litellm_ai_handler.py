@@ -294,6 +294,7 @@ class LiteLLMAIHandler(BaseAiHandler):
                 kwargs = self.add_litellm_callbacks(kwargs)
 
             seed = get_settings().config.get("seed", -1)
+            get_logger().info(f"Using fixed seed of {seed} ")
             if temperature > 0 and seed >= 0:
                 raise ValueError(f"Seed ({seed}) is not supported with temperature ({temperature}) > 0")
             elif seed >= 0:

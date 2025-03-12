@@ -12,6 +12,7 @@ from pr_agent.tools.pr_add_docs import PRAddDocs
 from pr_agent.tools.pr_code_suggestions import PRCodeSuggestions
 from pr_agent.tools.pr_config import PRConfig
 from pr_agent.tools.pr_description import PRDescription
+from pr_agent.tools.pr_deployment_impact import PRDeploymentImpact
 from pr_agent.tools.pr_generate_labels import PRGenerateLabels
 from pr_agent.tools.pr_help_message import PRHelpMessage
 from pr_agent.tools.pr_line_questions import PR_LineQuestions
@@ -39,6 +40,7 @@ command2class = {
     "similar_issue": PRSimilarIssue,
     "add_docs": PRAddDocs,
     "generate_labels": PRGenerateLabels,
+    "deployment_impact": PRDeploymentImpact,
 }
 
 commands = list(command2class.keys())
@@ -102,8 +104,12 @@ class PRAgent:
             elif action in command2class:
                 if notify:
                     notify()
-
-                await command2class[action](pr_url, ai_handler=self.ai_handler, args=args).run()
+                
+                # Check if class accepts cli_mode parameter
+                if action in ["improve", "improve_code", "update_changelog", "add_docs", "deployment_impact"]:
+                    await command2class[action](pr_url, cli_mode=True, ai_handler=self.ai_handler, args=args).run()
+                else:
+                    await command2class[action](pr_url, ai_handler=self.ai_handler, args=args).run()
             else:
                 return False
             return True
